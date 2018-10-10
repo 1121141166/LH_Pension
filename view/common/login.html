@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>后台登陆</title>
+    <include file="common:header" />
+
+    <link href="__INDEX__/css/style.min.css" rel="stylesheet">
+    <link href="__INDEX__/css/login.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+
+</head>
+
+<body class="signin">
+    <div class="signinpanel">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <br/><br/><br/><br/><br/>
+                    <div class="logopanel m-b" style="font-size: 34px">
+                        <strong>{:config('PLAT')['name']}</strong>
+                    </div>
+                    <div class="m-b"></div>
+                    <!--<h4>欢迎使用 <strong>{:config('PLAT')['name']}</strong></h4>-->
+
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form method="post" class="ajax-form" action="{:url('base/login')}">
+                    <h4 class="no-margins">登录：</h4>
+                    <p class="m-t-md">登录到{:config('PLAT')['keyword']}后台</p>
+                    <input type="text" class="form-control uname" placeholder="用户名" name="username"/>
+                    <input type="password" class="form-control pword m-b" placeholder="密码" name="password"/>
+                    <a href="#">忘记密码了？</a>
+                    <input class="btn btn-success btn-block" name="login" value="登录" type="submit">
+                </form>
+            </div>
+        </div>
+        <div class="signup-footer">
+            <div class="pull-left">
+                &copy; 2018 All Rights Reserved
+            </div>
+        </div>
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>

@@ -1,0 +1,67 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>模块功能管理</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>功能管理</h5>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-success btn-sm" href="{:url('add')}">增加</a>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>名称</th>
+                                    <th>菜单显示</th>
+                                    <th>排序</th>
+                                    <th>添加时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="channel" item="item">
+                                <tr >
+                                    <td></td>
+                                    <td style="text-align:left">&nbsp;&nbsp;&nbsp;<if condition="$item.level egt 2">{:str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$item['level']-2)}</if><if condition="$item.level neq 1">&nbsp;&nbsp;&nbsp;━&nbsp;&nbsp;&nbsp;</if>{$item.name}</td>
+                                    <td><if condition="$item.is_menu eq 1"><span style="color: green">显示</span>
+                                        <else /><span style="color: red">不显示</span></if></td>
+                                    <td>{$item.sort}</td>
+                                    <td>{$item.addtime|vtime='Y-m-d H:i:s',###}</td>
+                                    <td>
+                                        <a class="btn btn-outline btn-success btn-xs" href="{:url('Module/edit',['id'=>$item.id])}">编辑</a>
+                                        <a class="btn btn-outline btn-danger btn-xs" href="javascript:void(0)" onclick="confirm_url('要删除该功能吗','{:url('Module/delete')}','id='+{$item.id})">删除</a>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>

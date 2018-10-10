@@ -1,0 +1,78 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>数据库备份管理</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>数据库备份管理</h5>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="{:url('tables_back')}" method="post" class="ajax-form">
+                            <a class="icon-checkbox-unchecked" href="#square-o" onclick="selectAll(this)" title="全选"><i class="fa fa-square-o"></i>全选</a>
+                            &nbsp;&nbsp;&nbsp;<a href="#file-text-o" onclick="$('form').submit();return false;" title="备份"><i class="fa fa-file-text-o"></i>备份</a>
+                            <table class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>表名</th>
+                                        <th>记录条数</th>
+                                        <th>占用空间</th>
+                                        <th>编码</th>
+                                        <th>备注说明</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <foreach name="tables" item="item">
+                                    <tr >
+                                        <td><input type="checkbox" value="{:current($item)}" name="tables[]" ></td>
+                                        <td>{$item.Name}</td>
+                                        <td>{$item.Rows}</td>
+                                        <td>{:$item['Data_length']>=1024 ? ($item['Data_length']>>10).' KB':$item['Data_length'].' B'}</td>
+                                        <td>{$item['Collation']}</td>
+                                        <td>{$item['Comment']}</td>
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <include file="common:footer" />
+    <script>
+        function selectAll(obj) {
+            var flag = $(obj).hasClass('icon-checkbox-unchecked');
+            $("input[name='tables[]']").prop('checked',flag);
+            if(flag) {
+                $(obj).children("i").removeClass("fa-square-o").addClass("fa-check-square-o");
+            }else{
+                $(obj).children("i").removeClass("fa-check-square-o").addClass("fa-square-o");
+            }
+            $(obj).toggleClass('icon-checkbox-unchecked');
+        }
+    </script>
+</body>
+</html>

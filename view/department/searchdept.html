@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>部门管理</title>
+    <include file="common:header"/>
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper animated fadeInRight">
+    <div class="row">
+        <div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>部门管理</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>部门名称</th>
+                            <th>部门编码</th>
+                            <th>状态</th>
+                            <th>添加时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <foreach name="data" item="item">
+                            <tr>
+                                <td></td>
+                                <td style="text-align:left">&nbsp;&nbsp;&nbsp;<if condition="$item.level egt 1">
+                                    {:str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$item['level']-1)}
+                                </if>
+                                    <if condition="$item.level neq 0">&nbsp;&nbsp;&nbsp;━&nbsp;&nbsp;&nbsp;</if>
+                                    {$item.name}
+                                </td>
+                                <td>{$item.code}</td>
+                                <td>
+                                    <if condition="$item.status eq 1"><span style="color: green">正常</span>
+                                        <else/>
+                                        <span style="color: red">关闭</span></if>
+                                </td>
+                                <td>{$item.addtime|vtime='Y-m-d H:i:s',###}</td>
+                                <td>
+                                    <a class="btn btn-outline btn-success btn-xs"
+                                       onclick="push('{$item.id}','{$item.name}')">选择</a>
+                                </td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="paging_bar">
+    {$data.count|page}
+</div>
+
+<include file="common:footer"/>
+<script>
+    function push(id, name) {
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        console.log(id);
+        console.log(name);
+        parent.$('.pname').text(name);
+        parent.$('#pid').val(id);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>

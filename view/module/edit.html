@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>功能信息编辑</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>功能信息编辑<small></small></h5>
+                        &nbsp;&nbsp;&nbsp;<a class="btn btn-success btn-sm" href="javascript:window.history.back()">返回上一级</a>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal ajax-form" action="{:url('')}" >
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" placeholder="名称" class="form-control" value="{$data.name}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">模块名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="module" placeholder="模块名" class="form-control" value="{$data.module}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">操作名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="action" placeholder="操作名" class="form-control" value="{$data.action}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">参数</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="params" placeholder="参数" class="form-control" value="{$data.params}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属上级</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="pid_level" id="pid">
+                                        <option value="">请选择上级菜单</option>
+                                        <foreach name="module" item="item">
+                                            <option value="{$item.id},{$item['level']+1}" <if condition="$item['id'] eq $data['pid']">selected="selected"</if>><if condition="$item.level egt 2">{:str_repeat("&nbsp;┃&nbsp;",$item['level']-2)}</if><if condition="$item.level neq 1">&nbsp;┃━</if>{$item.name}</option>
+                                        </foreach>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">排序</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="sort" placeholder="排序，值越小越靠前" class="form-control" value="{$data.sort}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否菜单显示</label>
+
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="is_menu">
+                                        <option value="1" <if condition="$data.is_menu eq '1'">selected</if>>开启</option>
+                                        <option value="0" <if condition="$data.is_menu eq '0'">selected</if>>关闭</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" value="{$data.id}">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" name="submit" value="1">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:window.history.back()">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>

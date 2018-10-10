@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>用户反馈/投诉处理</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>用户反馈/投诉处理<small></small></h5>
+                        &nbsp;&nbsp;&nbsp;<a class="btn btn-success btn-sm" href="javascript:window.history.back()">返回上一级</a>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal ajax-form" action="{:url('')}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">标题</label>
+                                <div class="col-sm-10">
+                                    <label class="control-label">{$data.title}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">内容</label>
+                                <div class="col-sm-10">
+                                    <label class="control-label">{$data.content}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">反馈用户昵称</label>
+                                <div class="col-sm-10">
+                                    <label class="control-label">{$data.ub_name}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">反馈用户姓名</label>
+                                <div class="col-sm-10">
+                                    <label class="control-label">{$data.name}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">反馈用户手机号</label>
+                                <div class="col-sm-10">
+                                    <label class="control-label">{$data.mobile}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-10">
+                                    <label class="control-label">
+                                        <if condition="$data.type eq 1">软件问题
+                                            <elseif condition="$data.type eq 2"/>退换货问题
+                                            <elseif condition="$data.type eq 3"/>物流问题
+                                            <elseif condition="$data.type eq 4"/>商品问题
+                                            <elseif condition="$data.type eq 5"/>其它问题
+                                        </if>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">状态</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="status">
+                                        <option value="1" <if condition="$data.status eq '1'">selected</if>>已处理</option>
+                                        <option value="0" <if condition="$data.status eq '0'">selected</if>>未处理</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" value="{$data.id}">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" name="submit" value="1">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:window.history.back()">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>

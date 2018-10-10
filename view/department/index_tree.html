@@ -1,0 +1,84 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>部门管理</title>
+    <include file="common:header" />
+    <link href="__INDEX__/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>部门管理</h5>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-success btn-sm" href="{:url('add')}">新增</a>
+                        <a class="btn btn-primary btn-sm" href="javascript:void(0)" onclick="update()">修改</a>
+                        <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="del()">删除</a>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="treeview2" class="test" style="font-size: 15px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="id" >
+        </div>
+    </div>
+
+    <include file="common:footer" />
+    <script src="__INDEX__/js/plugins/treeview/bootstrap-treeview.js"></script>
+    <script>
+
+        var e = {$data};
+        $("#treeview2").treeview({
+            levels: 5,
+            data: e,
+            showCheckbox: true,
+            onNodeSelected: function(event, data) {
+
+            },
+        })
+
+        function update() {
+
+            var list = $('#treeview2').treeview('getChecked');
+            if(list.length > 1){
+                layer.msg('只能选中一个', {
+                    icon: 5,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return false;
+            }
+
+            var url = "{:url('edit',['id'=>id_new])}";
+            window.location.href = url.replace('id_new',list[0].id);
+
+        }
+
+        function del() {
+
+            var list = $('#treeview2').treeview('getChecked');
+            if(list.length > 1){
+                layer.msg('只能选中一个', {
+                    icon: 5,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return false;
+            }
+            var url = "{:url('delete')}";
+            ajaxurl(url,'id='+list[0].id);
+        }
+    </script>
+</body>
+</html>

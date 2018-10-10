@@ -1,0 +1,218 @@
+<script src="__INDEX__/js/jquery.min.js?v=2.1.4"></script>
+<script src="__INDEX__/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="__INDEX__/js/content.min.js?v=1.0.0"></script>
+<!--<script src="__INDEX__/js/plugins/iCheck/icheck.min.js"></script>-->
+<script src="__INDEX__/js/jquery.form.min.js"></script>
+<script src="__INDEX__/js/plugins/layer/laydate/laydate.js"></script>
+<script src="__INDEX__/js/plugins/layui/layui.all.js"></script>
+<script>
+    var start={elem:"#start",format:"YYYY-MM-DD hh:mm:ss",max:"2099-06-16 23:59:59",
+        istime:true,istoday:true,
+        choose:function(datas){end.min=datas;end.start=datas}};
+    var end={elem:"#end",format:"YYYY-MM-DD hh:mm:ss",max:"2099-06-16 23:59:59",
+        istime:true,istoday:true,
+        choose:function(datas){start.max=datas}};
+    var start_11={elem:"#start_11",format:"YYYY-MM-DD hh:mm:ss",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){end_11.min=datas;end_11.start_11=datas}};
+    var end_11={elem:"#end_11",format:"YYYY-MM-DD hh:mm:ss",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){start_11.max=datas}};
+    var start_12={elem:"#start_12",format:"YYYY-MM-DD hh:mm:ss",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){end_12.min=datas;end_12.start_12=datas}};
+    var end_12={elem:"#end_12",format:"YYYY-MM-DD hh:mm:ss",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){start_12.max=datas}};
+
+    var start_1={elem:"#start_1",format:"YYYY-MM-DD",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){end_1.min=datas;end_1.start_1=datas}};
+    var end_1={elem:"#end_1",format:"YYYY-MM-DD",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){start_1.max=datas}};
+    var start_2={elem:"#start_2",format:"YYYY-MM-DD",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){end_2.min=datas;end_2.start_2=datas}};
+    var end_2={elem:"#end_2",format:"YYYY-MM-DD",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){start_2.max=datas}};
+    var start_3={elem:"#start_3",format:"YYYY-MM-DD",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){end_3.min=datas;end_3.start_3=datas}};
+    var end_3={elem:"#end_3",format:"YYYY-MM-DD",max:"2099-06-16",
+        istime:true,istoday:true,
+        choose:function(datas){start_3.max=datas}};
+    if($("#start") && $("#start").length > 0){
+        laydate(start);
+    }
+    if($("#end") && $("#end").length > 0){
+        laydate(end);
+    }
+    if($("#start_11") && $("#start_11").length > 0){
+        laydate(start_11);
+    }
+    if($("#end_11") && $("#end_11").length > 0){
+        laydate(end_11);
+    }
+    if($("#start_12") && $("#start_12").length > 0){
+        laydate(start_12);
+    }
+    if($("#end_12") && $("#end_12").length > 0){
+        laydate(end_12);
+    }
+    if($("#start_1").length > 0){
+        laydate(start_1);
+    }
+    if($("#end_1").length > 0){
+        laydate(end_1);
+    }
+    if($("#start_2").length > 0){
+        laydate(start_2);
+    }
+    if($("#end_2").length > 0){
+        laydate(end_2);
+    }
+    if($("#start_3").length > 0){
+        laydate(start_3);
+    }
+    if($("#end_3").length > 0){
+        laydate(end_3);
+    }
+
+</script>
+<script type="text/javascript">
+$(function(){
+	/* 输入框 模拟placeHolder效果 */
+	$(".text_ph input").each(function(){
+		if($(this).val())
+		{
+			$(this).next("div").hide();
+		}
+	});
+	/* 时间日期选择控件 */
+	$(document).on("click", "input[name='starttime']", function(){
+		laydate({'istime': true, 'format': 'YYYY-MM-DD hh:mm:ss'});
+	});
+	$(document).on("click", "input[name='endtime']", function(){
+		laydate({'istime': true, 'format': 'YYYY-MM-DD hh:mm:ss'});
+	});
+	$(document).on("click", ".input_date", function(){
+		laydate({'istime': true, 'format': 'YYYY-MM-DD'});
+	});
+	$(document).on("click", ".input_date_time", function(){
+		laydate({'istime': true, 'format': 'YYYY-MM-DD hh:mm:ss'});
+	});
+
+	$(".text_ph input").focusin(function(){
+		$(this).next("div").hide();
+	});
+	$(".text_ph input").focusout(function(){
+		if(!$(this).val()){
+			$(this).next("div").show();
+		}
+	});
+	/* 多选框全选、不选效果 */
+	$("#selectAll").change(function(){
+		if(document.getElementById("selectAll").checked){
+			$(".table tbody tr td input").prop("checked", true);
+		} else {
+			$(".table tbody tr td input").prop("checked", false);
+		}
+	});
+});
+
+
+$(function(){
+	//ajax表单提交
+	$('.ajax-form').append("<input type='hidden' name='is_ajax' value='1'>");
+	$('.ajax-form').ajaxForm(function(response){
+		response = eval("("+response+")");
+        if(response.result.code == '10000')
+        {
+            layer.msg(response.result.msg, {
+                icon: 1,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            }, function(){
+                if(response.link != '') {
+                    window.location.href = response.link;
+                }
+            });
+        }
+        else
+        {
+            layer.msg(response.result.msg, {
+                icon: 5,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            }, function(){
+                if(response.link != '') {
+                    window.location.href = response.link;
+                }
+            });
+        }
+	});
+
+});
+
+
+//ajax 请求 只支持get请求方法
+function ajaxurl(url,param)
+{
+	$.ajax({
+		url:url,
+		data:'is_ajax=1&'+param,
+		type:'get',
+		dataType:'json',
+		success:function(response)
+		{
+            if(response.result.code == '10000')
+            {
+                layer.msg(response.result.msg, {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    if(response.link != '') {
+                        window.location.href = response.link;
+                    }
+                });
+            }
+            else
+            {
+                layer.msg(response.result.msg, {
+                    icon: 5,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    if(response.link != '') {
+                        window.location.href = response.link;
+                    }
+                });
+            }
+		},
+		error:function()
+		{
+			alert('请求失败');
+		}
+	});
+}
+
+//确认对话框请求
+function confirm_url(msg,url,param)
+{
+    layer.confirm(msg, {
+        btn: ['确认','取消'] //按钮
+    }, function(){
+        ajaxurl(url,param);
+    });
+}
+//Flash加载函数
+function Flash(url, width, height, wmode)
+{
+	if (!wmode) wmode="transparent";
+	text='<embed src="'+url+'" quality="high" ';
+	if (width) text+='width="'+width+'" ';
+	if (height) text+='height="'+height+'" ';
+	text+='wmode="'+wmode+'"></embed>';
+	document.write(text);
+}
+
+</script>

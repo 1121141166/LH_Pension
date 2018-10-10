@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title></title>
+	<include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>我负责的项目</h5>
+						<div class="ibox-tools">
+							<a class="collapse-link">
+								<i class="fa fa-chevron-up"></i>
+							</a>
+							<a class="close-link">
+								<i class="fa fa-times"></i>
+							</a>
+						</div>
+					</div>
+					<div class="ibox-content">
+						<table class="table table-hover no-margins">
+							<thead>
+							<tr>
+								<th>状态</th>
+								<th>名称</th>
+								<th>开始日期</th>
+								<th>截至日期</th>
+							</tr>
+							</thead>
+							<tbody>
+							<foreach name="pricipal" item="item">
+								<tr>
+									<td>
+										<if condition="$item.pricipal_status eq '0'"><span class="label label-danger">未开始</span></if>
+										<if condition="$item.pricipal_status eq '1'"><span class="label label-warning">进行中</span></if>
+									</td>
+									<td>{$item.title}</td>
+									<td><i class="fa fa-clock-o"></i> {$item.begintime|vtime='Y-m-d',###}</td>
+									<td><i class="fa fa-clock-o"></i> {$item.endtime|vtime='Y-m-d',###}</td>
+								</tr>
+							</foreach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>我审核的项目</h5>
+						<div class="ibox-tools">
+							<a class="collapse-link">
+								<i class="fa fa-chevron-up"></i>
+							</a>
+							<a class="close-link">
+								<i class="fa fa-times"></i>
+							</a>
+						</div>
+					</div>
+					<div class="ibox-content">
+						<table class="table table-hover no-margins">
+							<thead>
+							<tr>
+								<th>状态</th>
+								<th>名称</th>
+								<th>开始日期</th>
+								<th>截至日期</th>
+							</tr>
+							</thead>
+							<tbody>
+							<foreach name="audit" item="item">
+								<tr>
+									<td>
+										<if condition="$item.audit_status eq '0'"><span class="label label-danger">未开始</span></if>
+										<if condition="$item.audit_status eq '1'"><span class="label label-warning">进行中</span></if>
+									</td>
+									<td>{$item.title}</td>
+									<td><i class="fa fa-clock-o"></i> {$item.begintime|vtime='Y-m-d',###}</td>
+									<td><i class="fa fa-clock-o"></i> {$item.endtime|vtime='Y-m-d',###}</td>
+								</tr>
+							</foreach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<include file="common:footer" />
+</body>
+</html>

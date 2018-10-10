@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>部门信息编辑</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>部门信息编辑<small></small></h5>
+                        &nbsp;&nbsp;&nbsp;<a class="btn btn-success btn-sm" href="javascript:window.history.back()">返回上一级</a>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal ajax-form" action="{:url('')}" >
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">部门名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" placeholder="部门名称" class="form-control" value="{$data.name}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">部门编码</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="code" placeholder="部门编码" class="form-control" value="{$data.code}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">排序</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="sort" placeholder="排序值越小越靠前" class="form-control" value="{$data.sort}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input name="pid" value="{$data.pid}" id="pid" type="hidden">
+                                <label class="col-sm-2 control-label">所属上级</label>
+                                <div class="col-sm-10">
+                                    <label class="col-sm-2 pname">{$data.pname}</label>
+                                    <div class="col-sm-2">
+                                        <a class="btn btn-success" id="choose_dept">选择部门</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">状态</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="status">
+                                        <option value="1" <if condition="$data.status eq '1'">selected</if>>正常</option>
+                                        <option value="0" <if condition="$data.status eq '0'">selected</if>>关闭</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" value="{$data.id}">
+                            <input type="hidden" name="redirecturl" value="{$redirecturl}">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" name="submit" value="1">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:window.history.back()">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <include file="common:footer" />
+
+    <script>
+        //iframe层-父子操作
+        $('#choose_dept').on('click', function(){
+            layer.open({
+                type: 2,
+                area: ['1000px', '550px'],
+                offset: '50px',
+                fix: false, //不固定
+                maxmin: true,
+                shadeClose: true,
+                content: "{:url('searchDept')}"
+            });
+        });
+    </script>
+</body>
+</html>

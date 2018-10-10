@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>提交项目</title>
+    <include file="common:header" />
+    <link rel="stylesheet" type="text/css" href="__INDEX__/css/plugins/webuploader/webuploader.css">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>提交项目<small></small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal ajax-form" action="{:url('')}" >
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">项目提交说明</label>
+                                <div class="col-sm-10">
+                                    <script type="text/javascript" charset="utf-8" src="__INDEX__/js/plugins/ueditor/ueditor.config.js"></script>
+                                    <script type="text/javascript" charset="utf-8" src="__INDEX__/js/plugins/ueditor/ueditor.all.min.js"></script>
+                                    <script type="text/javascript" charset="utf-8" src="__INDEX__/js/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
+                                    <div id="editor" name="content" type="text/plain" style="height:300px;"></div>
+                                    <script type="text/javascript">
+                                        var ue = UE.getEditor('editor');
+                                        ue.ready(function() {
+                                            ue.setHeight(400);
+                                            ue.setContent('{$data.content|htmlspecialchars_decode}');
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" value="{$data.project_nodes_id}">
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" name="submit" value="1">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:window.history.back()">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <include file="common:footer" />
+    <script type="text/javascript">
+        var BASE_URL = '__INDEX__js/plugins/webuploader/';
+    </script>
+    <script src="__INDEX__/js/plugins/webuploader/webuploader.min.js"></script>
+    <!--<script src="__INDEX__/js/demo/webuploader-demo.min.js"></script>-->
+    <script type="application/javascript">
+        var url = "{:url('upload/upload',['filename'=>'goods'])}";
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: false,
+
+            // swf文件路径
+            swf: BASE_URL + 'Uploader.swf',
+
+            // 文件接收服务端。
+            server: url,
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            method:'POST',
+        });
+
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+
+            var $li = $(
+                '<div id="' + file.id + '" class="col-sm-2">' +
+                '<img>' +
+                '<input name="images[]" value="'+file.name+'" type="hidden"/>' +
+                '<div class="info"> </div>' +
+                '<a href="javascript:void(0)" onclick="delete_img(this)">删除</a>'+
+                '</div>'
+                ),
+                $img = $li.find('img'),
+                $list = $("#fileList");
+
+            // $list为容器jQuery实例
+            $list.append( $li );
+
+
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr( 'src', src );
+            });
+
+            uploader.upload();
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            var $li = $( '#'+file.id ),
+                $percent = $li.find('.progress');
+
+            // 避免重复创建
+            if ( !$percent.length ) {
+                $li.append('<p class="progress"><span></span></p>');
+            }
+
+            $percent.css( 'width', percentage * 100 + '%' );
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on( 'uploadSuccess', function( file ) {
+            $( '#'+file.id ).addClass('upload-state-done');
+        });
+
+        // 文件上传失败，显示上传出错。
+        uploader.on( 'uploadError', function( file ) {
+            var $li = $( '#'+file.id ),
+                $error = $li.find('div.error');
+
+            // 避免重复创建
+            if ( !$error.length ) {
+                $li.append('<div class="error"></div>');
+            }
+
+            $error.text('上传失败');
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on( 'uploadComplete', function( file ) {
+            $( '#'+file.id ).find('.progress').remove();
+        });
+
+
+        function delete_img(obj){
+            $(obj).parent().remove();
+        }
+
+    </script>
+    <script>
+        //iframe层-父子操作
+        $('#choose_final').on('click', function(){
+            layer.open({
+                type: 2,
+                area: ['1000px', '550px'],
+                offset: '50px',
+                fix: false, //不固定
+                maxmin: true,
+                shadeClose: true,
+                content: "{:url('searchFinalStaff')}"
+            });
+        });
+        //iframe层-父子操作
+        $('#choose_follow').on('click', function(){
+            layer.open({
+                type: 2,
+                area: ['1000px', '550px'],
+                offset: '50px',
+                fix: false, //不固定
+                maxmin: true,
+                shadeClose: true,
+                content: "{:url('searchFollowStaff')}"
+            });
+        });
+    </script>
+</body>
+</html>

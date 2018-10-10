@@ -1,0 +1,92 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>权限配置</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper  animated fadeInRight">
+        <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>权限配置</h5>
+                        &nbsp;&nbsp;&nbsp;<a class="btn btn-success btn-sm" href="javascript:window.history.back()">返回上一级</a>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <form action="{:url('admin/privilege')}" id="" name="" method="post" class="ajax-form">
+                            <input type="hidden" name="username" value="{$username}">
+                            <table class="table table-striped" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th width="10%">模块名</th>
+                                    <th>操作名</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <php>foreach($module[0] as $top_module){</php>
+                                <tr>
+                                    <td colspan="2" style="background:#7cbae5" align="center">{$top_module['name']}</td>
+                                </tr>
+                                <php>foreach($module[$top_module['id']] as $key=>$sec_module){</php>
+                                <tr  class="<if condition='$key%2 eq 0'>odd<else />even</if>">
+                                    <td style="font-size: 14px;font-weight: bold">
+                                        {$sec_module['name']}
+                                    </td>
+                                    <td align="left" style="text-align:left">
+                                        <php>foreach($module[$sec_module['id']] as $third_module){</php>
+                                        <php>$mvalue = strtolower($third_module['module'].'/'.$third_module['action']);</php>
+                                        <input type="checkbox" name="actions[]" value="{$mvalue}"
+                                        <php>if (in_array($mvalue,$admin_actions['actions'])){</php>
+                                        checked="true"<php>}</php>>
+                                        {$third_module['name']}&nbsp;
+                                        <php>foreach($module[$third_module['id']] as $fourth_module){</php>
+                                        <php>$mvalue = strtolower($fourth_module['module'].'/'.$fourth_module['action']);</php>
+                                        <input type="checkbox" name="actions[]" value="{$mvalue}"
+                                        <php>if (in_array($mvalue,$admin_actions['actions'])){</php>
+                                        checked="true"<php>}</php>>
+                                        {$fourth_module['name']}&nbsp;
+                                        <!--|&nbsp;-->
+                                        <php>}</php>
+                                        <!--|&nbsp;-->
+                                        <php>}</php>
+
+                                    </td>
+                                </tr>
+                                <php>}</php>
+                                <php>}</php>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" name="submit" value="1">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:window.history.back()">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <include file="common:footer" />
+</body>
+ </html>

@@ -1,0 +1,64 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>数据库还原管理</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>数据库还原管理</h5>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="{:url('tables_back')}" method="post" class="ajax-form">
+                            <table class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>文件名</th>
+                                        <th>文件大小</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <foreach name="files" item="item">
+                                    <tr>
+                                        <td><input type="checkbox" value="{$item.name}" name="back[]" ></td>
+                                        <td>{$item.name}</td>
+                                        <td>{:intval(filesize($item.file)/1024).'K'}</td>
+                                        <td>
+                                            <a class="btn btn-outline btn-default btn-xs" href="{:url('down',['back'=>$item.name])}"> 下载</a>
+                                            <a class="btn btn-outline btn-danger btn-xs" href="javascript:void(0)" onclick="confirm_url('要删除该记录吗','{:url('back_del',['back'=>$item.name])}')">删除</a>
+                                            <a class="btn btn-outline btn-primary btn-xs" href="javascript:void(0)" onclick="confirm_url('要还原该记录吗','{:url('back_recover',['back'=>$item.name])}')">还原</a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>

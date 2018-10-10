@@ -1,0 +1,95 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>我关注的项目</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>我关注的项目</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            <form role="form" class="form-inline" action="{:url('index')}">
+                                <div class="form-group">
+                                    <label>项目名称：</label>
+                                    <input type="text" placeholder="请输入项目名称" class="form-control" name="title" value="{$_params['title']}">
+                                </div>
+                                <div class="form-group">
+                                    <label>状态：</label>
+                                    <select class="form-control" name="status">
+                                        <option value="" <if condition="$_params[status] eq ''">selected</if>>请选择</option>
+                                        <option value="0" <if condition="$_params[status] eq '0'">selected</if>>未开始</option>
+                                        <option value="1" <if condition="$_params[status] eq '1'">selected</if>>进行中</option>
+                                        <option value="2" <if condition="$_params[status] eq '2'">selected</if>>已提交</option>
+                                        <option value="3" <if condition="$_params[status] eq '3'">selected</if>>已完成</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-white" type="submit">查询</button>
+                            </form>
+                        </div>
+                        <table class="table table-striped" style="width:100%">
+                            <tbody>
+                            <foreach name="data.list" item="item">
+                                <tr>
+                                    <td class="project-status">
+                                        <if condition="$item.status eq '0'"><span class="label label-danger">未开始</span></if>
+                                        <if condition="$item.status eq '1'"><span class="label label-primary">进行中</span></if>
+                                        <if condition="$item.status eq '2'"><span class="label label-success">已提交</span></if>
+                                        <if condition="$item.status eq '3'"><span class="label label-default">已完成</span></if>
+                                    </td>
+                                    <td class="project-title">
+                                        <a href="project_detail.html">{$item.title}</a>
+                                        <br/>
+                                        <small>创建于 {$item.addtime|vtime='Y-m-d H:i:s',###}</small>
+                                    </td>
+                                    <td>
+                                        <if condition="$item.priority eq '1'"><span class="label label-danger">高</span></if>
+                                        <if condition="$item.priority eq '2'"><span class="label label-warning">中</span></if>
+                                        <if condition="$item.priority eq '3'"><span class="label label-info">低</span></if>
+                                    </td>
+                                    <td class="project-completion">
+                                        <small>当前进度： {$item.rate}%</small>
+                                        <div class="progress progress-mini">
+                                            <div style="width: {$item.rate}%;" class="progress-bar"></div>
+                                        </div>
+                                    </td>
+                                    <td class="project-people">
+                                        {$item.follower_staff}
+                                    </td>
+                                    <td class="project-actions">
+                                        <a href="{:url('details',['id'=>$item.id])}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+                                    </td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+    <div class="paging_bar">
+        {$data.count|page}
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>

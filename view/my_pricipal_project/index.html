@@ -1,0 +1,109 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>我负责的项目</title>
+    <include file="common:header" />
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper animated fadeInRight">
+        <div class="row">
+            <div >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>我负责的项目</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            <form role="form" class="form-inline" action="{:url('index')}">
+                                <div class="form-group">
+                                    <label>项目名称：</label>
+                                    <input type="text" placeholder="请输入项目名称" class="form-control" name="ptitle" value="{$_params['ptitle']}">
+                                </div>
+                                <div class="form-group">
+                                    <label>节点名称：</label>
+                                    <input type="text" placeholder="请输入节点名称" class="form-control" name="title" value="{$_params['title']}">
+                                </div>
+                                <div class="form-group">
+                                    <label>状态：</label>
+                                    <select class="form-control" name="audit_status">
+                                        <option value="" <if condition="$_params[audit_status] eq ''">selected</if>>请选择</option>
+                                        <option value="0" <if condition="$_params[audit_status] eq '0'">selected</if>>未开始</option>
+                                        <option value="1" <if condition="$_params[audit_status] eq '1'">selected</if>>进行中</option>
+                                        <option value="2" <if condition="$_params[audit_status] eq '2'">selected</if>>已完成</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>项目开始时间：</label>
+                                    <input placeholder="开始日期" class="form-control layer-date" id="start" name="starttime"  value="{$_params['starttime']}">
+                                    <input placeholder="结束日期" class="form-control layer-date" id="end" name="endtime" value="{$_params['endtime']}">
+                                </div>
+                                <div class="form-group">
+                                    <label>项目结束时间：</label>
+                                    <input placeholder="开始日期" class="form-control layer-date" id="start_1" name="starttime1"  value="{$_params['starttime1']}">
+                                    <input placeholder="结束日期" class="form-control layer-date" id="end_1" name="endtime1" value="{$_params['endtime1']}">
+                                </div>
+                                <button class="btn btn-white" type="submit">查询</button>
+                            </form>
+                        </div>
+                        <table class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>项目名称</th>
+                                    <th>节点名称</th>
+                                    <th>项目开始时间</th>
+                                    <th>项目结束时间</th>
+                                    <th>状态</th>
+                                    <th>添加时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="data.list" item="item">
+                                <tr >
+                                    <td></td>
+                                    <td>{$item.ptitle}</td>
+                                    <td>{$item.title}</td>
+                                    <td>{$item.begintime|vtime='Y-m-d H:i:s',###}</td>
+                                    <td>{$item.endtime|vtime='Y-m-d H:i:s',###}</td>
+                                    <td>
+                                        <if condition="$item.pricipal_status eq '0'"><span style="color: red">未开始</span></if>
+                                        <if condition="$item.pricipal_status eq '1'"><span style="color: orange">进行中</span></if>
+                                        <if condition="$item.pricipal_status eq '2'"><span style="color: green">已完成</span></if>
+                                    </td>
+                                    <td>{$item.addtime|vtime='Y-m-d H:i:s',###}</td>
+                                    <td>
+                                        <a class="btn btn-outline btn-success btn-xs" href="{:url('details',['id'=>$item.project_id])}">查看</a>
+                                        <if condition="$item.pricipal_status eq '1'">
+                                            <a class="btn btn-outline btn-primary btn-xs" href="{:url('submitNodes',['id'=>$item.id])}">提交</a>
+                                        </if>
+                                    </td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+    <div class="paging_bar">
+        {$data.count|page}
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>

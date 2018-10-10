@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>项目详情</title>
+    <include file="common:header" />
+    <style>
+        .intro img{
+            max-width: 100%;
+        }
+        #vertical-timeline{
+            position: relative;
+            padding: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .vertical-timeline-content{
+            position: relative;
+            margin-left: 60px;
+            background: #fff;
+            border-radius: .25em;
+             padding: 0;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>项目详情</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content no-padding border-left-right">
+                            <!--<img alt="image" class="img-responsive" src="img/profile_big.jpg">-->
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4>
+                                <strong>{$data.title}</strong>
+                                <if condition="$data.priority eq '1'"><span class="label label-danger">高</span></if>
+                                <if condition="$data.priority eq '2'"><span class="label label-warning">中</span></if>
+                                <if condition="$data.priority eq '3'"><span class="label label-info">低</span></if>
+                            </h4>
+                            <p>发起人 ： {$data.fullname}</p>
+                            <div class="intro">
+                                {$data.introduction}
+                            </div>
+                            <div class="row m-t-lg">
+                                <div class="col-sm-4">
+                                    <span>{$data.addtime|vtime='Y-m-d',###}</span>
+                                    <h5>发起时间</h5>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>{$data.begintime|vtime='Y-m-d',###}</span>
+                                    <h5>开始时间</h5>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span>{$data.endtime|vtime='Y-m-d',###}</span>
+                                    <h5>结束时间</h5>
+                                </div>
+                            </div>
+                            <div class="user-button">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <if condition="$data.status eq '0'">
+                                            <button type="button" class="btn btn-danger btn-sm btn-block"><i class="fa fa-envelope"></i> 未开始</button>
+                                        </if>
+                                        <if condition="$data.status eq '1'">
+                                            <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> 进行中</button>
+                                        </if>
+                                        <if condition="$data.status eq '2'">
+                                            <button type="button" class="btn btn-success btn-sm btn-block"><i class="fa fa-envelope"></i> 已提交</button>
+                                        </if>
+                                        <if condition="$data.status eq '3'">
+                                            <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-envelope"></i> 已完成</button>
+                                        </if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>节点详情</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div>
+                            <div class="feed-activity-list">
+                                <foreach name="nodes" item="item">
+                                    <div class="feed-element">
+                                        <a class="pull-left">
+                                            <img alt="image" class="img-circle" src="__INDEX__/img/p1.jpg">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="pull-right">
+                                                <if condition="$item.status eq '0'"><span class="label label-danger">未开始</span></if>
+                                                <if condition="$item.status eq '1'"><span class="label label-primary">进行中</span></if>
+                                                <if condition="$item.status eq '2'"><span class="label label-success">已提交</span></if>
+                                                <if condition="$item.status eq '3'"><span class="label label-default">已完成</span></if>
+                                            </small>
+                                            <strong>{$item.title}</strong>
+                                            <br>
+                                            <small class="text-muted">开始时间：{$item.begintime|vtime='Y-m-d',###} &nbsp;&nbsp;&nbsp;&nbsp;结束时间：{$item.endtime|vtime='Y-m-d',###}</small>
+                                            <br>
+                                            <small class="text-muted" style="color: orangered"><strong>项目负责人：{$item.pricipal_staff}</strong></small>
+                                            <br>
+                                            <small class="text-muted" style="color: forestgreen"><strong>项目审核人：{$item.auditor_staff}</strong></small>
+                                            <foreach name="item.list" item="det">
+                                                <!--<div class="feed-element">-->
+                                                    <!--<a class="pull-left">-->
+                                                        <!--<img alt="image" class="img-circle" src="__INDEX__/img/p3.jpg">-->
+                                                    <!--</a>-->
+                                                    <!--<div class="media-body">-->
+                                                        <!--<small class="pull-right"></small>-->
+                                                        <!--<strong>{$det.fullname}</strong>-->
+                                                        <!--<if condition="$det.type eq '1'"><span style="color: red">提交了该项目</span></if>-->
+                                                        <!--<if condition="$det.type eq '2'"><span style="color: green">审核了该项目</span></if>-->
+                                                        <!--<br>-->
+                                                        <!--<small class="text-muted">时间：{$det.submittime|vtime='Y-m-d H:i:s',###}</small>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="pull-right">-->
+                                                        <!--<a class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> 详情</a>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                                <div id="vertical-timeline" class="vertical-container light-timeline">
+                                                    <div class="vertical-timeline-block">
+                                                        <div class="vertical-timeline-icon navy-bg">
+                                                            <i class="fa fa-briefcase"></i>
+                                                        </div>
+                                                        <div class="vertical-timeline-content">
+                                                            <p>[{$det.account}]{$det.fullname}
+                                                                <if condition="$det.type eq '1'"><span style="color: red">提交了该项目</span></if>
+                                                                <if condition="$det.type eq '2'"><span style="color: green">审核了该项目</span></if>
+                                                            </p>
+                                                            <a href="#" class="btn btn-xs btn-primary"> 更多信息</a>
+                                                            <span class="vertical-date">
+                                                            <small>{$det.submittime|vtime='Y-m-d H:i:s',###}</small>
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </foreach>
+                                        </div>
+                                    </div>
+                                </foreach>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <include file="common:footer" />
+</body>
+</html>
